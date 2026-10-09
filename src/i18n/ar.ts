@@ -22,6 +22,8 @@ export const ar: Dict = {
     switchHref: '/',
     switchLang: 'en',
     skip: 'انتقل إلى المحتوى',
+    toDark: 'التبديل إلى الوضع الداكن',
+    toLight: 'التبديل إلى الوضع الفاتح',
   },
   hero: {
     title: 'غسيلك، نستلمه من بابك ونعيده نظيفًا.',

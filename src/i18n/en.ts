@@ -21,6 +21,8 @@ export const en = {
     switchHref: '/ar/',
     switchLang: 'ar',
     skip: 'Skip to content',
+    toDark: 'Switch to dark theme',
+    toLight: 'Switch to light theme',
   },
   hero: {
     title: 'Your laundry, collected and brought back clean.',

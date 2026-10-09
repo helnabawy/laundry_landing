@@ -42,8 +42,9 @@
   --radius-slot: 4px;
 }
 
+/* Dark follows the OS unless the visitor picked a theme (data-theme on <html>). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     color-scheme: dark;
     --tape: #0e0f11;
     --tape-2: #17191c;
@@ -65,6 +66,33 @@
     --field-focus: #16181c;
     --field-signal: #e0311f;
   }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --tape: #0e0f11;
+  --tape-2: #17191c;
+  --tape-3: #212429;
+  --ink: #f2f2ee;
+  --ink-2: #a8aab0;
+  --ink-3: #7e8087;
+  --on-ink: #0e0f11;
+  --rule: #2a2d31;
+  --rule-strong: #3d4147;
+  --tint: #b18ae8;
+  --tint-pressed: #c9aaf2;
+  --tint-wash: #241a33;
+  --on-tint: #0e0f11;
+  --signal: #ff6b57;
+  --field: #f2f2ee;
+  --on-field: #0e0f11;
+  --on-field-2: #4e5057;
+  --field-focus: #16181c;
+  --field-signal: #e0311f;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
 }
 
 /* Arabic is a connected script: no tracking, ever. */

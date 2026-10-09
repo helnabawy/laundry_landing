@@ -134,5 +134,27 @@ function initWaitlist() {
   });
 }
 
+function initThemeToggle() {
+  const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  if (!button) return;
+  const root = document.documentElement;
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  const current = () => (root.dataset.theme as 'light' | 'dark' | undefined) ?? (media.matches ? 'dark' : 'light');
+  const label = () => {
+    button.setAttribute('aria-label', (current() === 'dark' ? button.dataset.toLight : button.dataset.toDark) ?? '');
+  };
+  button.addEventListener('click', () => {
+    const next = current() === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+    label();
+  });
+  media.addEventListener('change', label);
+  label();
+}
+
 initDemo();
 initWaitlist();
+initThemeToggle();
