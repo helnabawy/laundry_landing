@@ -1,0 +1,1039 @@
+---
+/**
+ * A phone running the real app, rebuilt in HTML from the Flutter screens
+ * (home_page.dart, product_grid_page.dart, schedule_pickers.dart,
+ * order_tracking_page.dart). Every length is authored in iOS points against a
+ * 390pt-wide screen and scaled by container width, so the phone stays one
+ * drawing at any size.
+ */
+import Glyph from './Glyph.astro';
+import type { GlyphName } from './Glyph.astro';
+import type { Dict } from '../i18n/en';
+
+export type Screen = 'home' | 'shop' | 'schedule' | 'track' | 'done';
+
+interface Props {
+  t: Dict;
+  screens: Screen[];
+  active?: Screen;
+  /** Initial custody stage on the tracking screen (0-4). */
+  stage?: number;
+  class?: string;
+  id?: string;
+}
+
+const { t, screens, active = screens[0], stage = 3, class: className, id } = Astro.props;
+const p = t.phone;
+const stageGlyphs: GlyphName[] = ['collect', 'custody', 'inspect', 'treat', 'deliver'];
+const has = (s: Screen) => screens.includes(s);
+const state = (i: number, at: number) => (i < at ? 'done' : i === at ? 'active' : 'upcoming');
+---
+
+<div class:list={['phone', className]} id={id} data-screen={active}>
+  <div class="phone-glass">
+    <div class="phone-screen" aria-hidden="true">
+      <div class="status" dir="ltr">
+        <span class="status-time">{p.time}</span>
+        <span class="island"></span>
+        <svg class="status-icons" viewBox="0 0 54 12" fill="currentColor">
+          <rect x="0" y="8" width="3" height="4" rx="0.8"></rect>
+          <rect x="5" y="5.5" width="3" height="6.5" rx="0.8"></rect>
+          <rect x="10" y="3" width="3" height="9" rx="0.8"></rect>
+          <rect x="15" y="0.5" width="3" height="11.5" rx="0.8"></rect>
+          <rect x="27.5" y="0.5" width="22" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1"></rect>
+          <rect x="29.5" y="2.5" width="16" height="7" rx="1.6"></rect>
+          <rect x="51" y="4" width="1.6" height="4" rx="0.8"></rect>
+        </svg>
+      </div>
+
+      {
+        has('home') && (
+          <section class="scr" data-for="home">
+            <header class="large-title">
+              <h3>{p.home}</h3>
+              <span class="bar-icons">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2z" /><path d="M9 8V6.5a3 3 0 0 1 6 0V8" /></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 1.5h-15z" /><path d="M10 20.5a2 2 0 0 0 4 0" /></svg>
+              </span>
+            </header>
+            <div class="laundry-row">
+              <span>
+                <small>{p.orderingFrom}</small>
+                <b>{p.laundry}</b>
+              </span>
+              <em>{p.change}</em>
+            </div>
+            <div class="tape">
+              <div class="strip">
+                {stageGlyphs.map((g) => (
+                  <span class="stage" data-state="upcoming"><Glyph name={g} size="100%" /></span>
+                ))}
+              </div>
+              <p class="strip-word">{p.nothing}</p>
+              <p class="fibre">{p.nothingNote}</p>
+            </div>
+            <div class="actions">
+              <span class="btn btn-ink">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+                {p.quickOrder}
+              </span>
+              <span class="btn btn-rule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2z" /><path d="M9 8V6.5a3 3 0 0 1 6 0V8" /></svg>
+                {p.shop}
+              </span>
+            </div>
+            <div class="past">
+              <p class="past-head">
+                <b>{p.previous}</b>
+                <em>{p.viewAll}</em>
+              </p>
+              {p.past.map(([n, st, when]) => (
+                <div class="past-row">
+                  <Glyph name="deliver" size="100%" bars={1} class="past-glyph" />
+                  <span>
+                    <b class="num">#{n}</b>
+                    <small>{st} · {when}</small>
+                  </span>
+                  <em>{p.reorder}</em>
+                </div>
+              ))}
+            </div>
+            <nav class="tabs">
+              {p.tabs.map((tab, i) => (
+                <span class:list={['tab', { on: i === 0 }]}>{tab}</span>
+              ))}
+            </nav>
+          </section>
+        )
+      }
+
+      {
+        has('shop') && (
+          <section class="scr" data-for="shop">
+            <header class="inline-title">
+              <svg class="back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
+              <h3>{p.shopTitle}</h3>
+              <span></span>
+            </header>
+            <div class="chips">
+              {p.chips.map((c, i) => (
+                <span class:list={['chip', { on: i === 0 }]}>{c}</span>
+              ))}
+            </div>
+            <div class="grid">
+              {p.products.map(([name, desc, price], i) => (
+                <div class="product">
+                  <span class="product-glyph">
+                    <Glyph name={i < 3 ? 'clothes' : 'textiles'} size="100%" />
+                  </span>
+                  <b>{name}</b>
+                  <small>{desc}</small>
+                  <span class="product-foot">
+                    <span class="num">{price}</span>
+                    <span class:list={['qty', { set: i < 3 }]}>{i === 0 ? '4' : i === 1 ? '2' : i === 2 ? '1' : '+'}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div class="cart-bar">
+              <span>
+                <small>{p.cart}</small>
+                <b>{p.cartItems}</b>
+              </span>
+              <span class="num">{p.cartTotal}</span>
+            </div>
+          </section>
+        )
+      }
+
+      {
+        has('schedule') && (
+          <section class="scr" data-for="schedule">
+            <header class="inline-title">
+              <svg class="back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
+              <h3>{p.scheduleTitle}</h3>
+              <span></span>
+            </header>
+            <p class="group-head">{p.pickupTime}</p>
+            <div class="days">
+              {p.days.map(([d, n], i) => (
+                <span class:list={['day', { on: i === 0 }]}>
+                  <small>{d}</small>
+                  <b class="num">{n}</b>
+                </span>
+              ))}
+            </div>
+            <div class="slots">
+              {p.slots.map((s, i) => (
+                <span class:list={['slot', 'num', { on: i === 1 }]}>{s}</span>
+              ))}
+            </div>
+            <p class="group-head">{p.deliveryTime}</p>
+            <div class="slot-row">
+              <span class="num">{p.deliverySlot}</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+            </div>
+            <div class="vip-row">
+              <span class="woven">
+                <b>VIP</b>
+                <i></i>
+                <span>24H</span>
+              </span>
+              <span class="vip-copy">
+                <b>{p.vipTitle}</b>
+                <small>{p.vipSub}</small>
+              </span>
+              <span class="switch on"></span>
+            </div>
+            <div class="actions">
+              <span class="btn btn-ink">{p.continue}</span>
+            </div>
+          </section>
+        )
+      }
+
+      {
+        has('track') && (
+          <section class="scr" data-for="track">
+            <header class="inline-title">
+              <svg class="back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
+              <h3>{p.orderTitle}</h3>
+              <span></span>
+            </header>
+            <div class="serial-block">
+              <span class="serial">{p.serial}</span>
+              <span class="status-word" data-status>{p.statuses[stage]}</span>
+            </div>
+            <div class="tape">
+              <div class="strip" data-strip data-stage={stage} style={`--at:${stage}`}>
+                {stageGlyphs.map((g, i) => (
+                  <span class="stage" data-state={state(i, stage)}>
+                    <Glyph name={g} size="100%" stateful />
+                  </span>
+                ))}
+                <span class="tick"></span>
+              </div>
+              <p class="strip-word" data-stage-word>{t.stages[stage]}</p>
+            </div>
+            <dl class="rows">
+              <div>
+                <dt>{p.pickupLabel}</dt>
+                <dd class="num">{p.pickupWhen}</dd>
+              </div>
+              <div>
+                <dt>{p.deliveryLabel}</dt>
+                <dd class="num">{p.deliverySlot}</dd>
+              </div>
+              <div>
+                <dt>{p.driverLabel}</dt>
+                <dd><span class="tag-swatch"></span>{p.driverName}</dd>
+              </div>
+              <div>
+                <dt>{p.totalLabel}</dt>
+                <dd class="num">{p.totalValue}<small class="paid">{p.paidNote}</small></dd>
+              </div>
+            </dl>
+            <ul class="notes" data-statuses={JSON.stringify(p.statuses)} data-stages={JSON.stringify(t.stages)}>
+              {p.statuses.map((s, i) => (
+                <li data-note={i} data-shown={i <= stage ? 'true' : 'false'} data-latest={i === stage ? '' : undefined}>
+                  <span class="note-dot"></span>
+                  {s}
+                </li>
+              ))}
+            </ul>
+            <div class="help-row">
+              <span>{p.invoiceHelp}</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+            </div>
+          </section>
+        )
+      }
+
+      {
+        has('done') && (
+          <section class="scr" data-for="done">
+            <div class="done-photo">
+              <img src="/images/confirm-folded.webp" alt="" loading="lazy" decoding="async" width="801" height="1200" />
+            </div>
+            <div class="done-body">
+              <span class="done-glyph"><Glyph name="deliver" size="100%" bars={1} /></span>
+              <h3>{p.deliveredTitle}</h3>
+              <p>{p.deliveredBody}</p>
+            </div>
+            <dl class="rows done-rows">
+              <div>
+                <dt>{p.itemsLabel}</dt>
+                <dd class="num">7</dd>
+              </div>
+              <div>
+                <dt>{p.totalLabel}</dt>
+                <dd class="num">{p.totalValue}</dd>
+              </div>
+            </dl>
+            <div class="rate-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z" /></svg>
+              <span>
+                <b>{p.rate}</b>
+                <small>{p.rateBody}</small>
+              </span>
+            </div>
+            <div class="actions">
+              <span class="btn btn-rule">{p.reorder}</span>
+            </div>
+          </section>
+        )
+      }
+      <span class="home-indicator"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .phone {
+    --bezel: #0c0d0f;
+    position: relative;
+    inline-size: 100%;
+    aspect-ratio: 390 / 844;
+    border-radius: 13.5% / 6.3%;
+    background: var(--bezel);
+    padding: 3.2%;
+    box-shadow:
+      0 1px 0 1px color-mix(in oklab, var(--bezel), #fff 22%) inset,
+      0 2px 4px rgb(22 24 28 / 0.12),
+      0 28px 60px -18px rgb(22 24 28 / 0.42);
+  }
+  .phone-glass {
+    position: relative;
+    block-size: 100%;
+    border-radius: 11% / 5.1%;
+    overflow: hidden;
+    background: var(--tape);
+    container-type: inline-size;
+  }
+  .phone-screen {
+    --px: calc(100cqw / 390);
+    position: absolute;
+    inset: 0;
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: calc(var(--px) * 17);
+    line-height: 1.3;
+  }
+  .status {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: calc(var(--px) * 54);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: calc(var(--px) * 34);
+    z-index: 3;
+    font-weight: 600;
+    font-size: calc(var(--px) * 16);
+  }
+  .island {
+    position: absolute;
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    inline-size: calc(var(--px) * 120);
+    block-size: calc(var(--px) * 34);
+    border-radius: 999px;
+    background: #000;
+  }
+  .status-icons {
+    inline-size: calc(var(--px) * 54);
+  }
+  .home-indicator {
+    position: absolute;
+    inset-block-end: calc(var(--px) * 8);
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    inline-size: calc(var(--px) * 134);
+    block-size: calc(var(--px) * 5);
+    border-radius: 999px;
+    background: var(--ink);
+    z-index: 3;
+  }
+
+  /* Screens stack; the phone shows one at a time. */
+  .scr {
+    position: absolute;
+    inset: 0;
+    padding-block-start: calc(var(--px) * 54);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    translate: 0 calc(var(--px) * 18);
+    transition:
+      opacity 360ms var(--ease-out),
+      translate 520ms var(--ease-out),
+      visibility 0s linear 360ms;
+  }
+  .phone[data-screen='home'] .scr[data-for='home'],
+  .phone[data-screen='shop'] .scr[data-for='shop'],
+  .phone[data-screen='schedule'] .scr[data-for='schedule'],
+  .phone[data-screen='track'] .scr[data-for='track'],
+  .phone[data-screen='done'] .scr[data-for='done'] {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 0;
+    transition:
+      opacity 360ms var(--ease-out),
+      translate 520ms var(--ease-out),
+      visibility 0s;
+  }
+
+  h3 {
+    margin: 0;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .large-title {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    padding: calc(var(--px) * 8) calc(var(--px) * 20) calc(var(--px) * 10);
+  }
+  .large-title h3 {
+    font-size: calc(var(--px) * 34);
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    line-height: 1.12;
+  }
+  .bar-icons {
+    display: flex;
+    gap: calc(var(--px) * 14);
+    padding-block-end: calc(var(--px) * 6);
+  }
+  .bar-icons svg {
+    inline-size: calc(var(--px) * 25);
+  }
+  .inline-title {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: calc(var(--px) * 8) calc(var(--px) * 12) calc(var(--px) * 12);
+    border-block-end: 1px solid var(--rule);
+  }
+  .inline-title h3 {
+    font-size: calc(var(--px) * 17);
+    font-weight: 600;
+  }
+  .back {
+    inline-size: calc(var(--px) * 26);
+    color: var(--tint);
+  }
+  :global([dir='rtl']) .back {
+    scale: -1 1;
+  }
+
+  .laundry-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc(var(--px) * 4) calc(var(--px) * 20) calc(var(--px) * 16);
+  }
+  .laundry-row span {
+    display: grid;
+  }
+  .laundry-row small {
+    font-size: calc(var(--px) * 13);
+    color: var(--ink-2);
+  }
+  .laundry-row b {
+    font-size: calc(var(--px) * 16);
+    font-weight: 600;
+  }
+  .laundry-row em {
+    font-style: normal;
+    color: var(--tint);
+    font-weight: 600;
+    font-size: calc(var(--px) * 15);
+  }
+
+  /* Tape band: stitched on both long edges. */
+  .tape {
+    background: var(--tape-2);
+    border-block: 1px solid var(--rule);
+    padding: calc(var(--px) * 16) calc(var(--px) * 20) calc(var(--px) * 12);
+    text-align: center;
+  }
+  .strip {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    block-size: calc(var(--px) * 34);
+    justify-items: center;
+  }
+  .stage {
+    inline-size: calc(var(--px) * 26);
+    block-size: calc(var(--px) * 26);
+    color: var(--ink-3);
+    transition: color 260ms var(--ease-out);
+  }
+  .stage[data-state='done'],
+  .stage[data-state='active'] {
+    color: var(--ink);
+  }
+  .stage :global(.g-outline),
+  .stage :global(.g-filled),
+  .stage :global(.g-done) {
+    transition:
+      opacity 260ms var(--ease-out),
+      scale 420ms var(--ease-out);
+    transform-origin: 12px 12px;
+  }
+  .stage :global(.g-filled),
+  .stage :global(.g-done) {
+    opacity: 0;
+  }
+  .stage[data-state='active'] :global(.g-outline),
+  .stage[data-state='done'] :global(.g-outline) {
+    opacity: 0;
+  }
+  .stage[data-state='active'] :global(.g-filled) {
+    opacity: 1;
+  }
+  .stage[data-state='done'] :global(.g-done) {
+    opacity: 1;
+  }
+  .tick {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: calc((var(--at, 3) + 0.5) * 20%);
+    translate: -50% 0;
+    inline-size: calc(var(--px) * 10);
+    block-size: calc(var(--px) * 5);
+    background: var(--ink);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    transition: inset-inline-start 420ms var(--ease-out);
+  }
+  :global([dir='rtl']) .tick {
+    translate: 50% 0;
+  }
+  .strip-word {
+    margin: calc(var(--px) * 8) 0 0;
+    font-family: var(--font-label);
+    font-stretch: 84%;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--track-stamp);
+    font-size: calc(var(--px) * 13);
+  }
+  .fibre {
+    margin: calc(var(--px) * 4) 0 0;
+    font-family: var(--font-label);
+    font-stretch: 84%;
+    font-weight: 600;
+    letter-spacing: var(--track-fibre);
+    font-size: calc(var(--px) * 11.5);
+    color: var(--ink-3);
+  }
+
+  .actions {
+    display: grid;
+    gap: calc(var(--px) * 12);
+    padding: calc(var(--px) * 24) calc(var(--px) * 20) 0;
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--px) * 8);
+    min-block-size: calc(var(--px) * 52);
+    border-radius: calc(var(--px) * 12);
+    font-family: var(--font-label);
+    font-stretch: 84%;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--track-stamp);
+    font-size: calc(var(--px) * 14);
+  }
+  .btn svg {
+    inline-size: calc(var(--px) * 20);
+  }
+  .btn-ink {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .btn-rule {
+    box-shadow: inset 0 0 0 calc(var(--px) * 1.5) var(--rule-strong);
+  }
+
+  .tabs {
+    margin-block-start: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: calc(var(--px) * 12) calc(var(--px) * 12) calc(var(--px) * 30);
+    border-block-start: 1px solid var(--rule);
+    background: var(--tape-2);
+    text-align: center;
+  }
+  .tab {
+    font-family: var(--font-label);
+    font-stretch: 84%;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--track-stamp);
+    font-size: calc(var(--px) * 11.5);
+    color: var(--ink-3);
+    padding-block-start: calc(var(--px) * 8);
+    border-block-start: calc(var(--px) * 2) solid transparent;
+  }
+  .tab.on {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .past {
+    padding: calc(var(--px) * 26) calc(var(--px) * 20) 0;
+  }
+  .past-head {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 calc(var(--px) * 6);
+    font-size: calc(var(--px) * 15);
+  }
+  .past-head em,
+  .past-row em {
+    font-style: normal;
+    color: var(--tint);
+    font-weight: 600;
+    font-size: calc(var(--px) * 14);
+  }
+  .past-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: calc(var(--px) * 12);
+    align-items: center;
+    padding-block: calc(var(--px) * 11);
+    border-block-end: 1px solid var(--rule);
+  }
+  .past-row :global(.past-glyph) {
+    inline-size: calc(var(--px) * 26);
+    block-size: calc(var(--px) * 26);
+  }
+  .past-row span {
+    display: grid;
+  }
+  .past-row b {
+    font-size: calc(var(--px) * 16);
+  }
+  .past-row small {
+    font-size: calc(var(--px) * 13);
+    color: var(--ink-2);
+  }
+
+  /* Shop */
+  .chips {
+    display: flex;
+    gap: calc(var(--px) * 8);
+    padding: calc(var(--px) * 14) calc(var(--px) * 20);
+    overflow: hidden;
+  }
+  .chip {
+    white-space: nowrap;
+    padding: calc(var(--px) * 6) calc(var(--px) * 14);
+    border-radius: 999px;
+    font-size: calc(var(--px) * 14);
+    box-shadow: inset 0 0 0 1px var(--rule-strong);
+  }
+  .chip.on {
+    background: var(--ink);
+    color: var(--on-ink);
+    box-shadow: none;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-block-start: 1px solid var(--rule);
+  }
+  .product {
+    display: grid;
+    gap: calc(var(--px) * 2);
+    padding: calc(var(--px) * 14) calc(var(--px) * 20) calc(var(--px) * 16);
+    border-block-end: 1px solid var(--rule);
+  }
+  .product:nth-child(odd) {
+    border-inline-end: 1px solid var(--rule);
+  }
+  .product-glyph {
+    inline-size: calc(var(--px) * 30);
+    block-size: calc(var(--px) * 30);
+    margin-block-end: calc(var(--px) * 10);
+  }
+  .product b {
+    font-size: calc(var(--px) * 16);
+    font-weight: 600;
+  }
+  .product small {
+    color: var(--ink-2);
+    font-size: calc(var(--px) * 13);
+  }
+  .product-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block-start: calc(var(--px) * 10);
+    font-weight: 600;
+    font-size: calc(var(--px) * 15);
+  }
+  .qty {
+    display: grid;
+    place-items: center;
+    min-inline-size: calc(var(--px) * 30);
+    block-size: calc(var(--px) * 30);
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 calc(var(--px) * 1.5) var(--rule-strong);
+    font-size: calc(var(--px) * 14);
+  }
+  .qty.set {
+    background: var(--tint);
+    color: var(--on-tint);
+    box-shadow: none;
+  }
+  .cart-bar {
+    margin: auto calc(var(--px) * 16) calc(var(--px) * 30);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc(var(--px) * 12) calc(var(--px) * 18);
+    border-radius: calc(var(--px) * 12);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .cart-bar span {
+    display: grid;
+  }
+  .cart-bar small {
+    font-size: calc(var(--px) * 12);
+    opacity: 0.75;
+  }
+  .cart-bar b {
+    font-size: calc(var(--px) * 15);
+  }
+  .cart-bar .num {
+    font-weight: 700;
+    font-size: calc(var(--px) * 18);
+  }
+
+  /* Schedule */
+  .group-head {
+    margin: calc(var(--px) * 22) calc(var(--px) * 20) calc(var(--px) * 10);
+    font-family: var(--font-label);
+    font-stretch: 84%;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--track-stamp);
+    font-size: calc(var(--px) * 12.5);
+    color: var(--ink-2);
+  }
+  .days {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: calc(var(--px) * 8);
+    padding-inline: calc(var(--px) * 20);
+  }
+  .day {
+    display: grid;
+    justify-items: center;
+    padding-block: calc(var(--px) * 8);
+    border-radius: calc(var(--px) * 10);
+    box-shadow: inset 0 0 0 1px var(--rule-strong);
+  }
+  .day small {
+    font-size: calc(var(--px) * 12);
+    color: var(--ink-2);
+  }
+  .day b {
+    font-size: calc(var(--px) * 20);
+  }
+  .day.on {
+    background: var(--ink);
+    color: var(--on-ink);
+    box-shadow: none;
+  }
+  .day.on small {
+    color: inherit;
+    opacity: 0.75;
+  }
+  .slots {
+    display: grid;
+    gap: calc(var(--px) * 8);
+    padding: calc(var(--px) * 12) calc(var(--px) * 20) 0;
+  }
+  .slot {
+    padding: calc(var(--px) * 11) calc(var(--px) * 14);
+    border-radius: calc(var(--px) * 10);
+    box-shadow: inset 0 0 0 1px var(--rule);
+    font-size: calc(var(--px) * 15);
+  }
+  .slot.on {
+    box-shadow: inset 0 0 0 calc(var(--px) * 2) var(--tint);
+    background: var(--tint-wash);
+    font-weight: 600;
+  }
+  .slot-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-inline: calc(var(--px) * 20);
+    padding-block: calc(var(--px) * 10);
+    border-block: 1px solid var(--rule);
+    font-size: calc(var(--px) * 15);
+  }
+  .slot-row svg {
+    inline-size: calc(var(--px) * 18);
+    color: var(--ink-3);
+  }
+  :global([dir='rtl']) .slot-row svg {
+    scale: -1 1;
+  }
+  .vip-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: calc(var(--px) * 12);
+    margin: calc(var(--px) * 18) calc(var(--px) * 20) 0;
+  }
+  .vip-copy {
+    display: grid;
+  }
+  .vip-copy b {
+    font-size: calc(var(--px) * 15);
+  }
+  .vip-copy small {
+    font-size: calc(var(--px) * 12);
+    color: var(--ink-2);
+  }
+  .woven {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--px) * 6);
+    padding: calc(var(--px) * 5) calc(var(--px) * 10);
+    border-radius: calc(var(--px) * 4);
+    background: var(--ink);
+    color: var(--on-ink);
+    font-family: var(--font-label);
+    font-stretch: 84%;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    font-size: calc(var(--px) * 11);
+  }
+  .woven::after {
+    content: '';
+    position: absolute;
+    inset: calc(var(--px) * 2.5);
+    border: calc(var(--px) * 0.9) dashed color-mix(in oklab, currentColor 50%, transparent);
+    border-radius: calc(var(--px) * 2);
+  }
+  .woven b {
+    font-weight: 800;
+  }
+  .woven i {
+    inline-size: calc(var(--px) * 1.5);
+    block-size: calc(var(--px) * 11);
+    background: color-mix(in oklab, currentColor 55%, transparent);
+  }
+  .switch {
+    inline-size: calc(var(--px) * 51);
+    block-size: calc(var(--px) * 31);
+    border-radius: 999px;
+    background: var(--tint);
+    position: relative;
+  }
+  .switch::after {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(var(--px) * 2);
+    inset-inline-end: calc(var(--px) * 2);
+    inline-size: calc(var(--px) * 27);
+    block-size: calc(var(--px) * 27);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 calc(var(--px) * 2) calc(var(--px) * 6) rgb(0 0 0 / 0.18);
+  }
+
+  /* Tracking */
+  .serial-block {
+    display: grid;
+    gap: calc(var(--px) * 6);
+    padding: calc(var(--px) * 22) calc(var(--px) * 20) calc(var(--px) * 18);
+  }
+  .serial {
+    font-family: var(--font-label);
+    font-stretch: 118%;
+    font-weight: 800;
+    font-size: calc(var(--px) * 56);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .serial::before {
+    content: '#';
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+  .status-word {
+    font-size: calc(var(--px) * 17);
+    font-weight: 600;
+    color: var(--tint);
+  }
+  .rows {
+    margin: calc(var(--px) * 8) calc(var(--px) * 20) 0;
+  }
+  .rows div {
+    display: flex;
+    justify-content: space-between;
+    padding-block: calc(var(--px) * 12);
+    border-block-end: 1px solid var(--rule);
+    font-size: calc(var(--px) * 15);
+  }
+  .rows dt {
+    color: var(--ink-2);
+  }
+  .rows dd {
+    margin: 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: calc(var(--px) * 8);
+  }
+  /* The driver's hi-vis routing tag: the field colour, on the driver only. */
+  .tag-swatch {
+    inline-size: calc(var(--px) * 10);
+    block-size: calc(var(--px) * 16);
+    border-radius: calc(var(--px) * 2);
+    background: var(--tag);
+    box-shadow: inset 0 0 0 1px rgb(22 24 28 / 0.25);
+  }
+  .paid {
+    font-weight: 400;
+    color: var(--ink-2);
+    font-size: calc(var(--px) * 13);
+  }
+  .notes {
+    list-style: none;
+    margin: calc(var(--px) * 18) calc(var(--px) * 20) 0;
+    padding-block-start: calc(var(--px) * 4);
+    padding: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: calc(var(--px) * 8);
+  }
+  .notes li {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--px) * 10);
+    font-size: calc(var(--px) * 14);
+    color: var(--ink-2);
+    transition:
+      opacity 260ms var(--ease-out),
+      translate 420ms var(--ease-out);
+  }
+  .notes li[data-shown='false'] {
+    display: none;
+  }
+  .notes li[data-latest] {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .note-dot {
+    inline-size: calc(var(--px) * 7);
+    block-size: calc(var(--px) * 7);
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .help-row {
+    margin: auto calc(var(--px) * 20) calc(var(--px) * 34);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc(var(--px) * 14) calc(var(--px) * 16);
+    border-radius: calc(var(--px) * 12);
+    background: var(--tape-2);
+    color: var(--tint);
+    font-weight: 600;
+    font-size: calc(var(--px) * 15);
+  }
+  .help-row svg {
+    inline-size: calc(var(--px) * 18);
+  }
+  :global([dir='rtl']) .help-row svg {
+    scale: -1 1;
+  }
+  .done-rows {
+    margin-block: 0 calc(var(--px) * 4);
+  }
+
+  /* Delivered */
+  .done-photo {
+    block-size: 46%;
+    margin-block-start: calc(var(--px) * -54);
+    overflow: hidden;
+  }
+  .done-photo img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  .done-body {
+    display: grid;
+    justify-items: start;
+    gap: calc(var(--px) * 6);
+    padding: calc(var(--px) * 20) calc(var(--px) * 20) calc(var(--px) * 12);
+  }
+  .done-glyph {
+    inline-size: calc(var(--px) * 34);
+    block-size: calc(var(--px) * 34);
+    margin-block-end: calc(var(--px) * 6);
+  }
+  .done-body h3 {
+    font-size: calc(var(--px) * 28);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .done-body p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: calc(var(--px) * 16);
+  }
+  .rate-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: calc(var(--px) * 12);
+    align-items: center;
+    margin-inline: calc(var(--px) * 20);
+    padding-block: calc(var(--px) * 14);
+    border-block: 1px solid var(--rule);
+  }
+  .rate-row svg {
+    inline-size: calc(var(--px) * 24);
+  }
+  .rate-row span {
+    display: grid;
+  }
+  .rate-row b {
+    font-size: calc(var(--px) * 16);
+  }
+  .rate-row small {
+    font-size: calc(var(--px) * 13);
+    color: var(--ink-2);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scr,
+    .stage,
+    .tick,
+    .notes li,
+    .stage :global(*) {
+      transition-duration: 1ms !important;
+    }
+  }
+</style>

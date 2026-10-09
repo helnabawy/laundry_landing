@@ -1,0 +1,604 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T00:00:00Z",
+  "title": "Design System: Laundry Landing (Care Label, web)",
+  "extensions": {
+    "source": "Web expression of laundry_app/lib/core/design (design_colors.dart, design_metrics.dart, design_typography.dart); web tokens in src/styles/global.css.",
+    "colorMeta": {
+      "tape": {
+        "role": "neutral",
+        "displayName": "Label Tape",
+        "canonical": "#fbfbf9",
+        "dark": "#0e0f11",
+        "cssVar": "--tape",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252524",
+          "#424240",
+          "#616160",
+          "#828281",
+          "#a5a5a3",
+          "#c9c9c7",
+          "#eeeeed"
+        ]
+      },
+      "tape-recessed": {
+        "role": "neutral",
+        "displayName": "Recessed Tape",
+        "canonical": "#f2f2ee",
+        "dark": "#17191c",
+        "cssVar": "--tape-2",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252523",
+          "#42423f",
+          "#61615e",
+          "#82827f",
+          "#a5a5a1",
+          "#c9c9c5",
+          "#efefec"
+        ]
+      },
+      "tape-sunken": {
+        "role": "neutral",
+        "displayName": "Sunken Tape",
+        "canonical": "#e9e9e3",
+        "dark": "#212429",
+        "cssVar": "--tape-3",
+        "tonalRamp": [
+          "#0b0b09",
+          "#252523",
+          "#42423d",
+          "#62625c",
+          "#83837d",
+          "#a5a5a0",
+          "#c9c9c4",
+          "#efefeb"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#16181c",
+        "dark": "#f2f2ee",
+        "cssVar": "--ink",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#242528",
+          "#404247",
+          "#5f6166",
+          "#808288",
+          "#a2a5aa",
+          "#c6c9cf",
+          "#edeef2"
+        ]
+      },
+      "ink-secondary": {
+        "role": "neutral",
+        "displayName": "Ink Secondary",
+        "canonical": "#5e6068",
+        "dark": "#a8aab0",
+        "cssVar": "--ink-2",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#242529",
+          "#404249",
+          "#5f6169",
+          "#80828a",
+          "#a2a5ad",
+          "#c6c9d2",
+          "#edeef4"
+        ]
+      },
+      "ink-tertiary": {
+        "role": "neutral",
+        "displayName": "Ink Tertiary",
+        "canonical": "#6e7077",
+        "dark": "#7e8087",
+        "cssVar": "--ink-3",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#242528",
+          "#404248",
+          "#5f6168",
+          "#808289",
+          "#a3a5ac",
+          "#c7c9d1",
+          "#edeef3"
+        ]
+      },
+      "on-ink": {
+        "role": "neutral",
+        "displayName": "On Ink",
+        "canonical": "#fbfbf9",
+        "dark": "#0e0f11",
+        "cssVar": "--on-ink",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252524",
+          "#424240",
+          "#616160",
+          "#828281",
+          "#a5a5a3",
+          "#c9c9c7",
+          "#eeeeed"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "canonical": "#d8d6d0",
+        "dark": "#2a2d31",
+        "cssVar": "--rule",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262522",
+          "#44423d",
+          "#63615c",
+          "#84827d",
+          "#a7a59f",
+          "#cbc9c3",
+          "#f0eeeb"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Rule Strong (stitch)",
+        "canonical": "#b9b7af",
+        "dark": "#3d4147",
+        "cssVar": "--rule-strong",
+        "tonalRamp": [
+          "#0c0b08",
+          "#262521",
+          "#44423b",
+          "#63615a",
+          "#84827b",
+          "#a7a59d",
+          "#cbc9c1",
+          "#f0eee9"
+        ]
+      },
+      "marking-violet": {
+        "role": "primary",
+        "displayName": "Marking Violet",
+        "canonical": "#5b2d8e",
+        "dark": "#b18ae8",
+        "cssVar": "--tint",
+        "tonalRamp": [
+          "#13002a",
+          "#2e1649",
+          "#522384",
+          "#7246a8",
+          "#9468ce",
+          "#b78cf5",
+          "#dbb0ff",
+          "#f9e1ff"
+        ]
+      },
+      "marking-violet-pressed": {
+        "role": "primary",
+        "displayName": "Marking Violet Pressed",
+        "canonical": "#472170",
+        "dark": "#c9aaf2",
+        "cssVar": "--tint-pressed",
+        "tonalRamp": [
+          "#120025",
+          "#2c1944",
+          "#502b7a",
+          "#704c9e",
+          "#916dc3",
+          "#b490e9",
+          "#d9b4ff",
+          "#f8e3ff"
+        ]
+      },
+      "marking-violet-wash": {
+        "role": "primary",
+        "displayName": "Marking Violet Wash",
+        "canonical": "#f0e9f8",
+        "dark": "#241a33",
+        "cssVar": "--tint-wash",
+        "tonalRamp": [
+          "#0d0a0f",
+          "#27232a",
+          "#453f4b",
+          "#645e6b",
+          "#867f8d",
+          "#a8a2b0",
+          "#cdc6d4",
+          "#f1ecf5"
+        ]
+      },
+      "on-tint": {
+        "role": "primary",
+        "displayName": "On Violet",
+        "canonical": "#fbfbf9",
+        "dark": "#0e0f11",
+        "cssVar": "--on-tint",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252524",
+          "#424240",
+          "#616160",
+          "#828281",
+          "#a5a5a3",
+          "#c9c9c7",
+          "#eeeeed"
+        ]
+      },
+      "thread-red": {
+        "role": "tertiary",
+        "displayName": "Thread Red",
+        "canonical": "#e0311f",
+        "dark": "#ff6b57",
+        "cssVar": "--signal",
+        "tonalRamp": [
+          "#2f0000",
+          "#530000",
+          "#820000",
+          "#a93022",
+          "#d15544",
+          "#f97966",
+          "#ff9e89",
+          "#ffcebb"
+        ]
+      },
+      "hi-vis-tag": {
+        "role": "tertiary",
+        "displayName": "Hi-Vis Tag (driver only)",
+        "canonical": "#cfe317",
+        "dark": "#cfe317",
+        "cssVar": "--tag",
+        "tonalRamp": [
+          "#0c0d00",
+          "#242900",
+          "#404900",
+          "#5e6a00",
+          "#7f8c00",
+          "#a1b016",
+          "#c4d54c",
+          "#eaf99c"
+        ]
+      },
+      "on-tag": {
+        "role": "tertiary",
+        "displayName": "On Hi-Vis",
+        "canonical": "#16181c",
+        "dark": "#16181c",
+        "cssVar": "--on-tag",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#242528",
+          "#404247",
+          "#5f6166",
+          "#808288",
+          "#a2a5aa",
+          "#c6c9cf",
+          "#edeef2"
+        ]
+      },
+      "ink-field": {
+        "role": "neutral",
+        "displayName": "Ink Field",
+        "canonical": "#16181c",
+        "dark": "#f2f2ee",
+        "cssVar": "--field",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#242528",
+          "#404247",
+          "#5f6166",
+          "#808288",
+          "#a2a5aa",
+          "#c6c9cf",
+          "#edeef2"
+        ]
+      },
+      "on-field": {
+        "role": "neutral",
+        "displayName": "On Field",
+        "canonical": "#fbfbf9",
+        "dark": "#0e0f11",
+        "cssVar": "--on-field",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252524",
+          "#424240",
+          "#616160",
+          "#828281",
+          "#a5a5a3",
+          "#c9c9c7",
+          "#eeeeed"
+        ]
+      },
+      "on-field-secondary": {
+        "role": "neutral",
+        "displayName": "On Field Secondary",
+        "canonical": "#b7b9be",
+        "dark": "#4e5057",
+        "cssVar": "--on-field-2",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#242527",
+          "#404246",
+          "#5f6166",
+          "#808287",
+          "#a3a5aa",
+          "#c7c9ce",
+          "#edeef1"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline and closing title. Arabic: 700, line-height 1.3, no tracking."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles, capped at 18ch. Arabic: 700, line-height 1.35."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Narrative step headings; service-level names."
+      },
+      "serial": {
+        "displayName": "Serial",
+        "purpose": "Prices, order numbers, wizard counters; always LTR, tabular."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose in the system face; leads at 1.125rem in Ink Secondary."
+      },
+      "body-arabic": {
+        "displayName": "Body (Arabic)",
+        "purpose": "Noto Kufi Arabic prose; secondary lines never below body size."
+      },
+      "stamp": {
+        "displayName": "Stamp",
+        "purpose": "Narrow tracked caps: promises, totals labels, nav, buttons. Arabic: 0.875rem, 500, untracked, no caps."
+      },
+      "fibre": {
+        "displayName": "Fibre",
+        "purpose": "Faint woven line: tagline and sample-data notes."
+      }
+    },
+    "shadows": [
+      {
+        "name": "band-lift",
+        "value": "0 1px 2px rgb(22 24 28 / 0.06), 0 18px 40px -22px rgb(22 24 28 / 0.35)",
+        "purpose": "Headline tape band over the hero photo."
+      },
+      {
+        "name": "ticket-lift",
+        "value": "0 1px 2px rgb(22 24 28 / 0.06), 0 10px 26px -16px rgb(22 24 28 / 0.3)",
+        "purpose": "Receipt ticket on its label panel."
+      },
+      {
+        "name": "sewn-label",
+        "value": "0 1px 2px rgb(22 24 28 / 0.1), 0 8px 20px -12px rgb(22 24 28 / 0.35)",
+        "purpose": "Label sewn onto a photograph."
+      },
+      {
+        "name": "device",
+        "value": "0 1px 0 1px color-mix(in oklab, #0c0d0f, #fff 22%) inset, 0 2px 4px rgb(22 24 28 / 0.12), 0 28px 60px -18px rgb(22 24 28 / 0.42)",
+        "purpose": "The rendered phone only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "The single easing for every transition."
+      },
+      {
+        "name": "press",
+        "value": "140ms; scale 0.985",
+        "purpose": "Button and store-button press and hover color."
+      },
+      {
+        "name": "state",
+        "value": "260ms",
+        "purpose": "Glyph modifier cross-fades, stage colors, FAQ plus rotation."
+      },
+      {
+        "name": "screen-swap",
+        "value": "opacity 360ms, translate 520ms (18pt rise)",
+        "purpose": "Phone screen changes."
+      },
+      {
+        "name": "step-focus",
+        "value": "420ms opacity 0.38 to 1",
+        "purpose": "Narrative step entering focus."
+      },
+      {
+        "name": "photo-drift",
+        "value": "900ms scale 1.03",
+        "purpose": "Hover on a garment photograph."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "all durations 1ms",
+        "purpose": "prefers-reduced-motion swaps state instantly."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stack",
+        "value": "48rem"
+      },
+      {
+        "name": "single-column",
+        "value": "64rem"
+      }
+    ],
+    "stitch": {
+      "band-inset": "7px",
+      "band-line": "1px dashed rule-strong",
+      "woven-inset": "2.5px",
+      "woven-line": "0.9px dashed currentColor 50%",
+      "glyph-stroke": 1.9,
+      "glyph-grid": "24pt"
+    },
+    "i18n": {
+      "ar": {
+        "tracking": 0,
+        "uppercase": false,
+        "bodyLineHeight": 1.85,
+        "serialDirection": "ltr",
+        "mirroring": "logical properties; directional icons flip with scale -1 1"
+      }
+    }
+  },
+  "components": [
+    {
+      "name": "Store Button",
+      "kind": "button",
+      "refersTo": "button-store",
+      "description": "Primary action: download the app. Marking Violet, two-line label.",
+      "html": "<a class=\"ds-store\" href=\"#\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3v11M7.5 9.5 12 14l4.5-4.5M4 15.5V20h16v-4.5\"/></svg><span><small>Download on the</small><b>App Store</b></span></a>",
+      "css": ".ds-store { display: inline-flex; align-items: center; gap: 0.7rem; min-height: 3.5rem; padding: 0.55rem 1.25rem 0.55rem 1rem; border-radius: 12px; background: var(--tint, #5b2d8e); color: var(--on-tint, #fbfbf9); text-decoration: none; transition: background-color 140ms cubic-bezier(0.22,1,0.36,1), scale 140ms cubic-bezier(0.22,1,0.36,1); } .ds-store span { display: grid; line-height: 1.1; } .ds-store small { font-size: 0.75rem; opacity: 0.85; } .ds-store b { font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-weight: 700; font-size: 1.125rem; letter-spacing: -0.01em; } .ds-store:hover { background: var(--tint-pressed, #472170); } .ds-store:active { scale: 0.985; } .ds-store:focus-visible { outline: 2px solid var(--tint, #5b2d8e); outline-offset: 3px; }"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Solid ink action with stamped caps.",
+      "html": "<button class=\"ds-btn-ink\">Get the app</button>",
+      "css": ".ds-btn-ink { display: inline-flex; align-items: center; min-height: 3.25rem; padding: 0.75rem 1.25rem; border: 0; border-radius: 12px; background: var(--ink, #16181c); color: var(--on-ink, #fbfbf9); font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-stretch: 84%; font-weight: 600; text-transform: uppercase; letter-spacing: 0.11em; font-size: 0.875rem; cursor: pointer; transition: background-color 140ms cubic-bezier(0.22,1,0.36,1), scale 140ms cubic-bezier(0.22,1,0.36,1); } .ds-btn-ink:hover { background: color-mix(in oklab, var(--ink, #16181c), var(--tape, #fbfbf9) 16%); } .ds-btn-ink:active { scale: 0.985; } .ds-btn-ink:focus-visible { outline: 2px solid var(--tint, #5b2d8e); outline-offset: 3px; }"
+    },
+    {
+      "name": "Rule Button",
+      "kind": "button",
+      "refersTo": "button-rule",
+      "description": "Secondary ruled outline, e.g. Message on WhatsApp.",
+      "html": "<a class=\"ds-btn-rule\" href=\"#\">Message on WhatsApp</a>",
+      "css": ".ds-btn-rule { display: inline-flex; align-items: center; min-height: 3.25rem; padding: 0.75rem 1.25rem; border-radius: 12px; background: transparent; color: var(--ink, #16181c); box-shadow: inset 0 0 0 1.5px var(--rule-strong, #b9b7af); font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-stretch: 84%; font-weight: 600; text-transform: uppercase; letter-spacing: 0.11em; font-size: 0.875rem; text-decoration: none; transition: background-color 140ms cubic-bezier(0.22,1,0.36,1), box-shadow 140ms cubic-bezier(0.22,1,0.36,1), scale 140ms cubic-bezier(0.22,1,0.36,1); } .ds-btn-rule:hover { box-shadow: inset 0 0 0 1.5px var(--ink, #16181c); background: var(--tape-2, #f2f2ee); } .ds-btn-rule:active { scale: 0.985; } .ds-btn-rule:focus-visible { outline: 2px solid var(--tint, #5b2d8e); outline-offset: 3px; }"
+    },
+    {
+      "name": "Woven Label",
+      "kind": "chip",
+      "refersTo": "woven-label",
+      "description": "Ink tag with a dashed inner stitch; receipt header and VIP name.",
+      "html": "<span class=\"ds-woven\"><b>VIP</b></span>",
+      "css": ".ds-woven { position: relative; display: inline-block; padding: 0.35rem 0.75rem; border-radius: 4px; background: var(--ink, #16181c); color: var(--on-ink, #fbfbf9); font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-stretch: 84%; font-weight: 600; text-transform: uppercase; letter-spacing: 0.11em; font-size: 0.75rem; line-height: 1.25; } .ds-woven b { font-weight: 800; } .ds-woven::after { content: ''; position: absolute; inset: 2.5px; border: 0.9px dashed color-mix(in oklab, currentColor 50%, transparent); border-radius: 2px; }"
+    },
+    {
+      "name": "Tape Band",
+      "kind": "card",
+      "description": "Label tape stitched just inside both long edges; carries the hero headline.",
+      "html": "<div class=\"ds-band\"><h1 class=\"ds-display\">Laundry, collected.</h1><p class=\"ds-fibre\">SAMPLE TAGLINE</p></div>",
+      "css": ".ds-band { position: relative; background: var(--tape, #fbfbf9); padding: 2.25rem 2.5rem 2rem; display: grid; gap: 1rem; box-shadow: 0 1px 2px rgb(22 24 28 / 0.06), 0 18px 40px -22px rgb(22 24 28 / 0.35); } .ds-band::before { content: ''; position: absolute; inset: 7px 0; border-block: 1px dashed var(--rule-strong, #b9b7af); pointer-events: none; } .ds-display { margin: 0; font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-stretch: 112%; font-weight: 800; letter-spacing: -0.035em; line-height: 0.98; font-size: clamp(2.6rem, 1.2rem + 3.7vw, 5rem); color: var(--ink, #16181c); } .ds-fibre { margin: 0; font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-stretch: 84%; font-weight: 600; letter-spacing: 0.095em; font-size: 0.75rem; color: var(--ink-3, #6e7077); }"
+    },
+    {
+      "name": "Ticket",
+      "kind": "card",
+      "refersTo": "ticket",
+      "description": "Receipt slip: woven header, dotted line items, serial total.",
+      "html": "<div class=\"ds-ticket\"><span class=\"ds-woven\"><b>ORDER</b></span><table><tr><th>Shirt <span>x 3</span></th><td>15.00</td></tr><tr class=\"sub\"><th>Subtotal</th><td>43.00</td></tr></table><p class=\"ds-total\"><span>TOTAL</span><span class=\"ds-serial\"><small>AED</small> 54.45</span></p></div>",
+      "css": ".ds-ticket { background: var(--tape, #fbfbf9); color: var(--ink, #16181c); padding: 1.5rem 1.5rem 1.25rem; border-radius: 4px; box-shadow: 0 1px 2px rgb(22 24 28 / 0.06), 0 10px 26px -16px rgb(22 24 28 / 0.3); display: grid; gap: 0.9rem; max-width: 28rem; } .ds-ticket table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; } .ds-ticket th, .ds-ticket td { padding-block: 0.45rem; font-weight: 400; border-bottom: 1px dotted var(--rule-strong, #b9b7af); } .ds-ticket th { text-align: start; } .ds-ticket th span { color: var(--ink-3, #6e7077); } .ds-ticket td { text-align: end; font-weight: 600; } .ds-ticket tr.sub th, .ds-ticket tr.sub td { border-top: 1px solid var(--ink, #16181c); font-weight: 600; } .ds-total { margin: 0; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-stretch: 84%; font-weight: 600; text-transform: uppercase; letter-spacing: 0.11em; font-size: 0.8125rem; } .ds-serial { font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-stretch: 118%; font-weight: 800; font-size: 2.5rem; letter-spacing: -0.03em; line-height: 1; text-transform: none; font-variant-numeric: tabular-nums; direction: ltr; } .ds-serial small { font-size: 0.45em; letter-spacing: 0.04em; color: var(--ink-2, #5e6068); } .ds-woven { position: relative; justify-self: start; display: inline-block; padding: 0.35rem 0.75rem; border-radius: 4px; background: var(--ink, #16181c); color: var(--on-ink, #fbfbf9); font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-stretch: 84%; font-weight: 600; text-transform: uppercase; letter-spacing: 0.11em; font-size: 0.75rem; } .ds-woven::after { content: ''; position: absolute; inset: 2.5px; border: 0.9px dashed color-mix(in oklab, currentColor 50%, transparent); border-radius: 2px; }"
+    },
+    {
+      "name": "Waitlist Field (ink field)",
+      "kind": "input",
+      "refersTo": "input-on-field",
+      "description": "Email field on the inverted ink field.",
+      "html": "<div class=\"ds-field-wrap\"><label class=\"ds-field-label\">Email</label><input class=\"ds-field\" placeholder=\"you@example.com\"></div>",
+      "css": ".ds-field-wrap { display: grid; gap: 0.5rem; padding: 1.5rem; background: var(--field, #16181c); } .ds-field-label { font-size: 0.875rem; color: var(--on-field-2, #b7b9be); } .ds-field { min-height: 3.25rem; padding: 0.75rem 1rem; border: 1.5px solid color-mix(in oklab, var(--on-field, #fbfbf9) 35%, transparent); border-radius: 12px; background: transparent; color: var(--on-field, #fbfbf9); font: inherit; } .ds-field::placeholder { color: color-mix(in oklab, var(--on-field, #fbfbf9) 55%, transparent); } .ds-field:hover { border-color: color-mix(in oklab, var(--on-field, #fbfbf9) 60%, transparent); } .ds-field:focus-visible { outline: 2px solid var(--on-field, #fbfbf9); outline-offset: 2px; border-color: transparent; } .ds-field[aria-invalid='true'] { border-color: var(--signal, #e0311f); }"
+    },
+    {
+      "name": "Stitched Nav",
+      "kind": "nav",
+      "description": "Sticky tape bar with dashed bottom stitch, expanded wordmark and stamped links.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-word\">LAUNDRY</span><a href=\"#\">How it works</a><a href=\"#\">Prices</a><a href=\"#\" lang=\"ar\">العربية</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 1.5rem; padding: 0.6rem 1.5rem; background: var(--tape, #fbfbf9); border-bottom: 1px dashed var(--rule-strong, #b9b7af); } .ds-word { font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-stretch: 118%; font-weight: 800; font-size: 1.125rem; letter-spacing: 0.02em; color: var(--ink, #16181c); margin-inline-end: auto; } .ds-nav a { font-family: var(--font-label, 'Archivo Variable', system-ui, sans-serif); font-stretch: 84%; font-weight: 600; text-transform: uppercase; letter-spacing: 0.11em; font-size: 0.8125rem; color: var(--ink-2, #5e6068); text-decoration: none; padding-block: 0.75rem; } .ds-nav a:hover { color: var(--ink, #16181c); text-decoration: underline; } .ds-nav a:focus-visible { outline: 2px solid var(--tint, #5b2d8e); outline-offset: 3px; } .ds-nav a:lang(ar) { font-family: 'Noto Kufi Arabic Variable', sans-serif; text-transform: none; letter-spacing: 0; font-size: 0.9375rem; }"
+    },
+    {
+      "name": "Chip (phone)",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Category filter inside the rendered app; selected fills with ink.",
+      "html": "<div class=\"ds-chips\"><span class=\"ds-chip on\">Clothes</span><span class=\"ds-chip\">Textiles</span><span class=\"ds-chip\">Carpets</span></div>",
+      "css": ".ds-chips { display: flex; gap: 8px; } .ds-chip { white-space: nowrap; padding: 6px 14px; border-radius: 999px; font-size: 14px; color: var(--ink, #16181c); box-shadow: inset 0 0 0 1px var(--rule-strong, #b9b7af); cursor: pointer; } .ds-chip:hover { background: var(--tape-2, #f2f2ee); } .ds-chip.on { background: var(--ink, #16181c); color: var(--on-ink, #fbfbf9); box-shadow: none; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Care Label",
+    "overview": "**Creative North Star: \"The Care Label\"**\n\nThis page is the web expression of the laundry app's Care Label system (laundry_app/lib/core/design). The page adds no palette, faces or shapes of its own. Every surface reads as the woven and printed tape sewn into a garment: an off-white tape ground, near-black ink, one violet marking ink for actions, dashed stitching where two pieces of tape meet, and a small set of care pictograms drawn with a single stroke. The app's palette values are carried over hex for hex; the web adds only the CSS mechanics (fluid type, logical properties, a `prefers-color-scheme` dark set).\n\nDensity is calm and editorial at page scale, while the phone renders the app's own density at true proportions. Depth is almost absent. Paper-thin lift appears only where a physical object sits on the tape: the headline band over the photograph, the receipt ticket, a sewn label on a photo, the phone itself. Labels are set in narrow, tracked caps (\"stamps\") and expanded serials, as if printed on the tape; running prose stays in the reader's own system face.\n\nThe system is bilingual by construction. Arabic (RTL) swaps the prose face to Noto Kufi Arabic, drops all tracking to zero, opens up line-height, and mirrors through logical properties rather than overrides.",
+    "keyCharacteristics": [
+      "Tape ground, ink text, one violet for every action; red only for failure; hi-vis only for the driver.",
+      "Dashed stitch lines at seams and tape edges; solid hairlines between rows of data.",
+      "Archivo at three widths: expanded for display and serials, narrow tracked caps for stamps.",
+      "Care-glyph pictograms on a 24pt grid with one 1.9 stroke; state shown by modifier, never by a new symbol.",
+      "Full light and dark sets; Arabic is never tracked."
+    ],
+    "rules": [
+      {
+        "name": "The One Marking Ink Rule",
+        "body": "Every action the visitor can take on the tape carries Marking Violet or is a ruled outline in ink; no second accent color exists.",
+        "section": "colors"
+      },
+      {
+        "name": "The Reserved Hi-Vis Rule",
+        "body": "Hi-Vis Tag belongs to the driver and field role. It marks the driver and nothing else: no buttons, highlights, focus rings or decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Red Means Failed Rule",
+        "body": "Thread Red appears only when something has gone wrong, never for emphasis, prices or sale states.",
+        "section": "colors"
+      },
+      {
+        "name": "The Untracked Arabic Rule",
+        "body": "Arabic is a connected script: tracking is zero on every role, uppercase is never applied, and Arabic stamps and fibres step up to 0.875rem at weight 500.",
+        "section": "typography"
+      },
+      {
+        "name": "The Arabic Floor Rule",
+        "body": "Arabic secondary text never drops below body size (1.0625rem) and runs at line-height 1.85.",
+        "section": "typography"
+      },
+      {
+        "name": "The Serial Reads LTR Rule",
+        "body": "Amounts and order numbers keep left-to-right direction inside RTL layouts.",
+        "section": "typography"
+      },
+      {
+        "name": "The Phone At True Scale Rule",
+        "body": "The phone renders the app at its own 390pt geometry, scaled by container units, never as a screenshot. Its width is bounded by viewport height so the whole device fits on screen when pinned.",
+        "section": "layout"
+      },
+      {
+        "name": "The Objects Only Rule",
+        "body": "Only things that would physically rest on the tape (a band, a ticket, a sewn label, a device) cast a shadow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Stitch Versus Rule Rule",
+        "body": "Dashed lines join pieces of tape (seams, band edges, label borders); solid hairlines divide rows of information. Never swap them.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Single Stroke Rule",
+        "body": "Every pictogram is drawn on the 24pt grid at a 1.9 stroke with round caps and joins. State changes by modifier (filled for the active stage, a bar beneath for completed, dots for service level), never by a new symbol.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do take every color from the Care Label tokens; when the app's design_colors.dart changes, change the web values to match.",
+      "Do give every action Marking Violet or an ink ruled outline at the control radius, with the 0.985 press.",
+      "Do use dashed stitching for seams and tape edges and solid hairlines for data rows.",
+      "Do set prices and order numbers as expanded serials with tabular figures, left-to-right in both languages.",
+      "Do label demo data in the phone as sample, in a fibre line.",
+      "Do zero all tracking and drop uppercase for Arabic, and keep Arabic secondary text at body size or larger."
+    ],
+    "donts": [
+      "Don't use Hi-Vis Tag for anything other than the driver/field role.",
+      "Don't use Thread Red outside failure states.",
+      "Don't add a new palette, typeface or shape family to the web surface; the identity is the app's.",
+      "Don't cast shadows from buttons, panels or rows, and never use hard offset shadows.",
+      "Don't replace the rendered phone with screenshots or floating mockups.",
+      "Don't draw a new pictogram to show a state change; use the filled, bar or dot modifiers."
+    ]
+  }
+}

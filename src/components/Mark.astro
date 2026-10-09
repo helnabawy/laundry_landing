@@ -1,0 +1,28 @@
+---
+/** The brand mark from the app: a label tab hanging from its stitch. */
+interface Props {
+  size?: number | string;
+  label?: string;
+  class?: string;
+}
+const { size = 32, label, class: className } = Astro.props;
+const stitch = Array.from({ length: 7 }, (_, i) => `M${2 + i * 12} 10h6`).join('');
+---
+
+<svg
+  class:list={['mark', className]}
+  viewBox="0 0 84 100"
+  height={size}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="5.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d={stitch}></path>
+  <path d="M13 26H71V92L42 74L13 92Z"></path>
+  <path d="M27 45H57M27 58H46"></path>
+</svg>

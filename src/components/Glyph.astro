@@ -1,0 +1,186 @@
+---
+/**
+ * The pictogram family from the app, drawn in SVG on the same 24pt grid with
+ * the same 1.9 stroke. Meaning changes by modifier, never by a new symbol:
+ * filled is the active stage, a bar beneath is a stage completed, dots are
+ * service level.
+ *
+ * `stateful` renders every modifier at once and lets CSS pick, so a strip can
+ * advance in place by changing one attribute on an ancestor.
+ */
+export type GlyphName =
+  | 'collect'
+  | 'custody'
+  | 'inspect'
+  | 'treat'
+  | 'deliver'
+  | 'clothes'
+  | 'textiles'
+  | 'carpets'
+  | 'curtains';
+
+interface Props {
+  name: GlyphName;
+  size?: number | string;
+  filled?: boolean;
+  bars?: 0 | 1 | 2;
+  dots?: 0 | 1 | 2;
+  stateful?: boolean;
+  label?: string;
+  class?: string;
+}
+
+const {
+  name,
+  size = 24,
+  filled = false,
+  bars = 0,
+  dots = 0,
+  stateful = false,
+  label,
+  class: className,
+} = Astro.props;
+
+const STROKE = 1.9;
+
+function geometry(glyph: GlyphName, h: number) {
+  const k = h / 24;
+  const y = (v: number) => +(v * k).toFixed(2);
+  const r = (v: number) => +(v * Math.min(1, Math.max(0.8, k))).toFixed(2);
+  const circle = (cx: number, cy: number, rad: number) =>
+    `M${cx - rad} ${cy}a${rad} ${rad} 0 1 0 ${rad * 2} 0a${rad} ${rad} 0 1 0 ${-rad * 2} 0Z`;
+  const rrect = (x: number, yy: number, w: number, hh: number, rad: number) =>
+    `M${x + rad} ${yy}H${x + w - rad}Q${x + w} ${yy} ${x + w} ${yy + rad}V${yy + hh - rad}Q${x + w} ${yy + hh} ${x + w - rad} ${yy + hh}H${x + rad}Q${x} ${yy + hh} ${x} ${yy + hh - rad}V${yy + rad}Q${x} ${yy} ${x + rad} ${yy}Z`;
+
+  switch (glyph) {
+    case 'collect':
+    case 'deliver': {
+      const out = glyph === 'deliver';
+      const tip = out ? y(2.5) : y(8.5);
+      const tail = out ? y(8.5) : y(2.5);
+      const wing = out ? y(5.3) : y(5.7);
+      return {
+        body: `M3.5 ${y(9)}L5.6 ${y(20.5)}H18.4L20.5 ${y(9)}Z`,
+        detail: `M12 ${tail}V${tip}M9.2 ${wing}L12 ${tip}L14.8 ${wing}`,
+        dots: { x0: 6.5, x1: 17.5, cy: (y(11) + y(18)) / 2 },
+      };
+    }
+    case 'custody':
+      return {
+        body: rrect(3.5, y(5.5), 17, y(20.5) - y(5.5), 2),
+        detail: `M3.5 ${y(10)}H20.5`,
+        dots: { x0: 6, x1: 18, cy: (y(12) + y(18)) / 2 },
+      };
+    case 'inspect':
+      return {
+        body: circle(12, y(12), r(8.5)),
+        detail: circle(12, y(12), r(3.2)),
+        dots: { x0: 7, x1: 17, cy: y(12) },
+      };
+    case 'treat':
+      return {
+        body: `M2.5 ${y(8.5)}L4.8 ${y(20.5)}H19.2L21.5 ${y(8.5)}Z`,
+        detail: `M3.2 ${y(12)}C6 ${y(9.6)} 9 ${y(14.4)} 12 ${y(12)}C15 ${y(9.6)} 18 ${y(14.4)} 20.8 ${y(12)}`,
+        dots: { x0: 6.5, x1: 17.5, cy: y(16) },
+      };
+    case 'clothes':
+      return {
+        body: `M4 ${y(8.5)}L9 ${y(4)}L12 ${y(6.6)}L15 ${y(4)}L20 ${y(8.5)}L16.8 ${y(11.4)}V${y(20.5)}H7.2V${y(11.4)}Z`,
+        detail: '',
+        dots: { x0: 8.5, x1: 15.5, cy: y(15.5) },
+      };
+    case 'textiles':
+      return {
+        body: [0, 1, 2]
+          .map((i) => rrect(3.5 + i * 0.9, y(6 + i * 4.8), 17 - i * 1.8, y(3.2), 1.4))
+          .join(''),
+        detail: '',
+        dots: { x0: 7, x1: 17, cy: y(19) },
+      };
+    case 'carpets':
+      return {
+        body: `M8 ${y(5)}H20.5V${y(19)}H8Z` + circle(8, y(12), r(7)),
+        detail: circle(8, y(12), r(2.6)),
+        dots: { x0: 12, x1: 19, cy: y(12) },
+      };
+    case 'curtains':
+      return {
+        body: `M3.5 ${y(17)}C7 ${y(21)} 10.5 ${y(14)} 14 ${y(18)}C16.5 ${y(20.8)} 18.5 ${y(17.5)} 20.5 ${y(19)}V${y(4.5)}H3.5Z`,
+        detail: [6.5, 12, 17.5].map((x) => `M${x} ${y(6)}V${y(16)}`).join(''),
+        dots: { x0: 7, x1: 17, cy: y(11) },
+      };
+  }
+}
+
+const full = geometry(name, 24);
+const barred = geometry(name, 19);
+const uid = `g${Math.random().toString(36).slice(2, 9)}`;
+
+function dotList(g: ReturnType<typeof geometry>, n: number) {
+  const step = (g.dots.x1 - g.dots.x0) / (n + 1);
+  return Array.from({ length: n }, (_, i) => g.dots.x0 + step * (i + 1));
+}
+
+const barLines = (n: number) =>
+  Array.from({ length: n }, (_, i) => `M5 ${19 + 1.8 + i * 3.2}H19`).join('');
+---
+
+<svg
+  class:list={['glyph', className]}
+  viewBox="0 0 24 24"
+  width={size}
+  height={size}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  fill="none"
+  stroke="currentColor"
+  stroke-width={STROKE}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <defs>
+    <mask id={`${uid}-m`} maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="#fff" stroke="none"></rect>
+      {full.detail && <path d={full.detail} stroke="#000"></path>}
+      {dotList(full, dots).map((cx) => <circle cx={cx} cy={full.dots.cy} r="1.45" fill="#000" stroke="none"></circle>)}
+    </mask>
+  </defs>
+  {
+    stateful ? (
+      <>
+        {/* outline: upcoming */}
+        <g class="g-outline">
+          <path d={full.body}></path>
+          {full.detail && <path d={full.detail}></path>}
+        </g>
+        {/* filled: active */}
+        <g class="g-filled" mask={`url(#${uid}-m)`}>
+          <path d={full.body} fill="currentColor"></path>
+        </g>
+        {/* barred: done */}
+        <g class="g-done">
+          <path d={barred.body}></path>
+          {barred.detail && <path d={barred.detail}></path>}
+          <path d={barLines(1)}></path>
+        </g>
+      </>
+    ) : filled ? (
+      <g mask={`url(#${uid}-m)`}>
+        <path d={full.body} fill="currentColor"></path>
+      </g>
+    ) : bars > 0 ? (
+      <g>
+        <path d={barred.body}></path>
+        {barred.detail && <path d={barred.detail}></path>}
+        <path d={barLines(bars)}></path>
+      </g>
+    ) : (
+      <g>
+        <path d={full.body}></path>
+        {full.detail && <path d={full.detail}></path>}
+        {dotList(full, dots).map((cx) => <circle cx={cx} cy={full.dots.cy} r="1.45" fill="currentColor" stroke="none"></circle>)}
+      </g>
+    )
+  }
+</svg>
